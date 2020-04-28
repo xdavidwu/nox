@@ -14,6 +14,7 @@ phpcs:
   script:
     - .composer/vendor/bin/phpcs --standard=PSR2 app routes config tests
   cache:
+    key: $CI_JOB_NAME
     paths:
       - .composer
 
@@ -33,6 +34,7 @@ build:
       # and are potentially fat
     - tar -cf app.tar --exclude-vcs --exclude=node_modules --exclude=app.tar .
   cache:
+    key: $CI_JOB_NAME
     paths:
       - vendor
       - node_modules
