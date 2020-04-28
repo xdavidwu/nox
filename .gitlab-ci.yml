@@ -1,5 +1,10 @@
+stages:
+  - lint
+  - build
+  - deploy
+
 phpcs:
-  stage: test
+  stage: lint
   image: alpine:edge
   variables:
     COMPOSER_HOME: .composer
@@ -11,3 +16,26 @@ phpcs:
   cache:
     paths:
       - .composer
+
+build:
+  stage: build
+  image: alpine:edge
+  before_script:
+    - >
+        apk add composer npm php7-dom php7-fileinfo php7-json php7-xml
+        php7-mbstring php7-openssl php7-tokenizer tar
+    - composer --no-interaction --no-ansi --no-dev install
+    - npm install
+  script:
+    - npm run prod
+    - echo "$CI_COMMIT_SHA" > version
+      # excluding vcs and node_modules, as they are not required for running
+      # and are potentially fat
+    - tar -cf app.tar --exclude-vcs --exclude=node_modules --exclude=app.tar .
+  cache:
+    paths:
+      - vendor
+      - node_modules
+  artifacts:
+    paths:
+      - app.tar
