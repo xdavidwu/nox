@@ -1,0 +1,13 @@
+phpcs:
+  stage: test
+  image: alpine:edge
+  variables:
+    COMPOSER_HOME: .composer
+  before_script:
+    - apk add composer php7-tokenizer php7-xmlwriter php7-simplexml
+    - composer --no-interaction --no-ansi global require squizlabs/php_codesniffer
+  script:
+    - .composer/vendor/bin/phpcs --standard=PSR2 app routes config tests
+  cache:
+    paths:
+      - .composer
