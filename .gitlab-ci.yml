@@ -41,3 +41,28 @@ build:
   artifacts:
     paths:
       - app.tar
+
+deploy:
+  stage: deploy
+  tags:
+    - shell
+  only:
+    refs:
+      - master
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - >
+        test -f "$PROD_ENV" && test -f "$SSH_DEPLOY_KEY" &&
+        test -n "$SSH_DEPLOY_USER" && test -n "$SSH_DEPLOY_HOST"
+    - chmod 600 "$SSH_DEPLOY_KEY"
+  script:
+    - >
+        echo -e "put app.tar /tmp/app.tar\nput $PROD_ENV /tmp/app-env" |
+        sftp -i "$SSH_DEPLOY_KEY" "$SSH_DEPLOY_USER"@"$SSH_DEPLOY_HOST"
+    - >
+        ssh -i "$SSH_DEPLOY_KEY" "$SSH_DEPLOY_USER"@"$SSH_DEPLOY_HOST" "
+        cd $SSH_DEPLOY_PATH && tar -xf /tmp/app.tar && chmod g+w storage -R &&
+        mv /tmp/app-env .env && rm /tmp/app.tar"
+  after_script:
+    - rm "$SSH_DEPLOY_KEY" "$PROD_ENV"
