@@ -62,7 +62,8 @@ deploy:
         sftp -i "$SSH_DEPLOY_KEY" "$SSH_DEPLOY_USER"@"$SSH_DEPLOY_HOST"
     - >
         ssh -i "$SSH_DEPLOY_KEY" "$SSH_DEPLOY_USER"@"$SSH_DEPLOY_HOST" "
-        cd $SSH_DEPLOY_PATH && tar -xf /tmp/app.tar && chmod g+w storage -R &&
-        mv /tmp/app-env .env && rm /tmp/app.tar"
+        cd $SSH_DEPLOY_PATH && tar -xf /tmp/app.tar &&
+        (chmod g+w storage -R || true ) && mv /tmp/app-env .env &&
+        rm /tmp/app.tar"
   after_script:
     - rm "$SSH_DEPLOY_KEY" "$PROD_ENV"
