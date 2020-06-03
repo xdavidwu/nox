@@ -8,6 +8,6 @@ class MonthlyValue extends Model
 {
     public function station()
     {
-        return $this->hasOne('App\Station');
+        return $this->belongsTo('App\Station');
     }
 }
