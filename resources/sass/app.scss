@@ -1,1 +1,10 @@
-//
+@import '~bootstrap-material-design/scss/bootstrap-material-design';
+
+.card {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.card-body {
+    overflow: auto;
+}
