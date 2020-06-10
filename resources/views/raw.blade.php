@@ -34,13 +34,18 @@
                             <label for="stations" class="bmd-label-floating">Stations</label>
                             <select id="stations" class="form-control selectpicker"
                                 name="stations[]" data-live-search="true" multiple>
-                                @foreach(\App\Station::all() as $station)
-                                    @if(!is_null(request()->input('stations')) &&
-                                        in_array($station->id, request()->input('stations')))
-                                        <option value="{{ $station->id }}" selected>{{ $station->name }}</option>
-                                    @else
-                                        <option value="{{ $station->id }}">{{ $station->name }}</option>
-                                    @endif
+                                {{-- TODO: reduce query --}}
+                                @foreach(\App\Station::select('county')->distinct()->get() as $group)
+                                    <optgroup label="{{ $group->county }}">
+                                        @foreach(\App\Station::where('county', $group->county)->get() as $station)
+                                            @if(!is_null(request()->input('stations')) &&
+                                                in_array($station->id, request()->input('stations')))
+                                                <option value="{{ $station->id }}" selected>{{ $station->name }}</option>
+                                            @else
+                                                <option value="{{ $station->id }}">{{ $station->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
                                 @endforeach
                             </select>
                         </div>
