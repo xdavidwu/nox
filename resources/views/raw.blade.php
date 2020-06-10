@@ -13,7 +13,8 @@
                             <input id="month_after" class="form-control" type="month"
                                 min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
                                 max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
-                                name="month_after" pattern="[0-9]{4}-[0-9]{2}">
+                                name="month_after" pattern="[0-9]{4}-[0-9]{2}"
+                                value="{{ request()->input('month_after') }}">
                         </div>
                     </div>
                     {{-- TODO: dedup --}}
@@ -24,7 +25,8 @@
                             <input id="month_before" class="form-control" type="month"
                                 min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
                                 max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
-                                name="month_before" pattern="[0-9]{4}-[0-9]{2}">
+                                name="month_before" pattern="[0-9]{4}-[0-9]{2}"
+                                value="{{ request()->input('month_before') }}">
                         </div>
                     </div>
                     <div class="col">
@@ -33,7 +35,12 @@
                             <select id="stations" class="form-control selectpicker"
                                 name="stations[]" data-live-search="true" multiple>
                                 @foreach(\App\Station::all() as $station)
-                                    <option value="{{ $station->id }}">{{ $station->name }}</option>
+                                    @if(!is_null(request()->input('stations')) &&
+                                        in_array($station->id, request()->input('stations')))
+                                        <option value="{{ $station->id }}" selected>{{ $station->name }}</option>
+                                    @else
+                                        <option value="{{ $station->id }}">{{ $station->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
