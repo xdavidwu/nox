@@ -89,7 +89,7 @@
                         @foreach($values as $value)
                             <tr>
                                 <td>{{ $value->station->name }}</td>
-                                <td>{{ \Carbon\Carbon::parse($value->month)->format('Y/m') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($value->month)->format('Y-m') }}</td>
                                 <td>{{ $value->so2 }}</td>
                                 <td>{{ $value->co }}</td>
                                 <td>{{ $value->co2 }}</td>
