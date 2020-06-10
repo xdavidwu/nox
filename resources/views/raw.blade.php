@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header">Query</div>
             <div class="card-body" style="overflow: visible">
-                <form method="GET" autocomplete="off" class="form-row">
+                <form method="GET" autocomplete="off" class="form-row align-items-center">
                     <div class="col">
                         <div class="form-group">
                             <label for="month_after" class="bmd-label-floating">Month after</label>
