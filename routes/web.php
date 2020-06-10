@@ -18,3 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/raw', 'RawController@search');
+
+Route::get('/canvas', function () {
+    return view('canvas');
+});
