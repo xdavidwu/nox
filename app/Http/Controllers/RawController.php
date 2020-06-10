@@ -25,6 +25,9 @@ class RawController extends Controller
                 DateTime::createFromFormat('!Y-m', $req->input('month_before'))
             );
         }
+        if (!is_null($req->input('stations'))) {
+            $query = $query->whereIn('station_id', $req->input('stations'));
+        }
 
         $values = $query->paginate(64)->appends($req->except('page'));
 

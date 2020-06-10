@@ -5,7 +5,7 @@
     <div class="justify-content-center">
         <div class="card">
             <div class="card-header">Query</div>
-            <div class="card-body">
+            <div class="card-body" style="overflow: visible">
                 <form method="GET" autocomplete="off" class="form-row">
                     <div class="col">
                         <div class="form-group">
@@ -25,6 +25,17 @@
                                 min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
                                 max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
                                 name="month_before" pattern="[0-9]{4}-[0-9]{2}">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="stations" class="bmd-label-floating">Stations</label>
+                            <select id="stations" class="form-control selectpicker"
+                                name="stations[]" data-live-search="true" multiple>
+                                @foreach(\App\Station::all() as $station)
+                                    <option value="{{ $station->id }}">{{ $station->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-1">
