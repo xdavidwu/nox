@@ -13,3 +13,7 @@ body {
 .card-body {
     overflow: auto;
 }
+
+.form-control:focus {
+    box-shadow: none;
+}
