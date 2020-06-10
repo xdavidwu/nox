@@ -4,7 +4,37 @@
 <div class="container">
     <div class="justify-content-center">
         <div class="card">
-            <div class="card-header">Raw Monthly Data</div>
+            <div class="card-header">Query</div>
+            <div class="card-body">
+                <form method="GET" autocomplete="off" class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="month_after" class="bmd-label-floating">Month after</label>
+                            <input id="month_after" class="form-control" type="month"
+                                min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
+                                max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
+                                name="month_after" pattern="[0-9]{4}-[0-9]{2}">
+                        </div>
+                    </div>
+                    {{-- TODO: dedup --}}
+                    {{-- TODO: month input compatibility workarounds (when degarded to text) --}}
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="month_before" class="bmd-label-floating">Month before</label>
+                            <input id="month_before" class="form-control" type="month"
+                                min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
+                                max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
+                                name="month_before" pattern="[0-9]{4}-[0-9]{2}">
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-raised btn-primary" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Result</div>
             <div class="card-body">
                 <table class="table" style="overflow: scroll">
                     <thead>
