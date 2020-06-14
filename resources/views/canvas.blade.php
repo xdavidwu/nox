@@ -5,7 +5,10 @@
     <div class="justify-content-center">
         <div class="card">
             <div class="card-header">Canvas</div>
-            <canvas id="canvas"></canvas>
+            <div id="canvascon">
+                <canvas id="maplayer" style="position: absolute; z-index: 1"></canvas>
+                <canvas id="canvas" style="position: absolute; z-index: 2"></canvas>
+            </div>
             <script src="{{ asset('js/canvas.js') }}"></script>
         </div>
     </div>
