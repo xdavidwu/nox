@@ -35,24 +35,27 @@ export default class MainLayer {
 
     redraw() {
         this.ctx.clearRect(0, 0, this.mapInfo.width, this.mapInfo.height);
+        this.ctx.fillStyle = 'red';
         for (let station of this.stations) {
-            if (this.focusedStation === station) {
-                if ((!this.lastPopup) || this.lastPopupStation !== station) {
-                    this.lastPopup = new Popup(station.getText(), 12, this.scale);
-                    this.lastPopupStation = station;
-
-                    const coord = station.getCoord(this.mapInfo);
-                    if (coord.x + this.lastPopup.width > this.mapInfo.width)
-                        this.popupCoord.x = this.mapInfo.width - this.lastPopup.width;
-                    else this.popupCoord.x = coord.x;
-                    if (coord.y + this.lastPopup.height > this.mapInfo.height)
-                        this.popupCoord.y = coord.y - 16 - this.lastPopup.height;
-                    else this.popupCoord.y = coord.y + 16;
-                }
-                this.ctx.fillStyle = 'blue';
+            if (this.focusedStation !== station) {
+                station.draw(this.ctx, this.mapInfo);
             }
-            else this.ctx.fillStyle = 'red';
-            station.draw(this.ctx, this.mapInfo);
+        }
+        if (this.focusedStation) {
+            if ((!this.lastPopup) || this.lastPopupStation !== this.focusedStation) {
+                this.lastPopup = new Popup(this.focusedStation.getText(), 12, this.scale);
+                this.lastPopupStation = this.focusedStation;
+
+                const coord = this.focusedStation.getCoord(this.mapInfo);
+                if (coord.x + this.lastPopup.width > this.mapInfo.width)
+                    this.popupCoord.x = this.mapInfo.width - this.lastPopup.width;
+                else this.popupCoord.x = coord.x;
+                if (coord.y + this.lastPopup.height > this.mapInfo.height)
+                    this.popupCoord.y = coord.y - 16 - this.lastPopup.height;
+                else this.popupCoord.y = coord.y + 16;
+            }
+            this.ctx.fillStyle = 'blue';
+            this.focusedStation.draw(this.ctx, this.mapInfo);
         }
         if (this.popupVisible) this.lastPopup.draw(this.ctx, this.popupCoord.x, this.popupCoord.y);
     }
