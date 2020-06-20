@@ -63,9 +63,11 @@ export default class MainLayer {
         let found = false;
         for (let station of this.stations) {
             if (station.inRange(this.pointerInfo, this.mapInfo)) {
-                this.focusedStation = station;
-                this.popupVisible = true;
-                this.redraw();
+                if (this.focusedStation !== station) {
+                    this.focusedStation = station;
+                    this.popupVisible = true;
+                    this.redraw();
+                }
                 found = true;
                 break;
             }
