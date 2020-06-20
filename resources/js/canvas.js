@@ -18,15 +18,15 @@ let mapInfo = {
     mapScale: 1
 };
 
-container.style.minWidth = mapInfo.width + 'px';
-container.style.minHeight = mapInfo.height + 'px';
+//container.style.minWidth = mapInfo.width + 'px';
+//container.style.minHeight = mapInfo.height + 'px';
 
-if (container.offsetWidth > mapInfo.width) {
+//if (container.offsetWidth > mapInfo.width) {
     mapInfo.mapScale = container.offsetWidth / mapInfo.width;
     mapInfo.width = container.offsetWidth;
     mapInfo.height *= mapInfo.mapScale;
     container.style.minHeight = mapInfo.height + 'px';
-}
+//}
 
 let scale = window.devicePixelRatio || 1;
 
