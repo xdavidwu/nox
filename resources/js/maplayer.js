@@ -8,7 +8,11 @@ export default class MapLayer {
         let xml = new DOMParser().parseFromString(path, 'text/xml');
         let layers = xml.getElementsByTagName('path');
         for (let i = 0; i < layers.length; i++) {
-            this.paths.push(new Path2D(layers[i].getAttribute('d')));
+            this.paths.push({
+                path: new Path2D(layers[i].getAttribute('d')),
+                fill: layers[i].getAttribute('fill'),
+                stroke: layers[i].getAttribute('stroke')
+            });
         }
 
         this.resize(scale);
@@ -25,8 +29,16 @@ export default class MapLayer {
     }
 
     redraw() {
+        this.ctx.fillStyle = '#C6ECFF';
+        this.ctx.fillRect(0, 0, this.mapInfo.width, this.mapInfo.height);
         for (let i = 0; i < this.paths.length; i++) {
-            this.ctx.stroke(this.paths[i]);
+            if (this.paths[i].fill !== 'none') {
+                this.ctx.fillStyle = this.paths[i].fill;
+                this.ctx.fill(this.paths[i].path);
+            }
+            if (this.paths[i].stroke) this.ctx.strokeStyle = this.paths[i].stroke;
+            else this.ctx.strokeStyle = 'black';
+            this.ctx.stroke(this.paths[i].path);
         }
     }
 }
