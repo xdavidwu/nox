@@ -29,6 +29,7 @@ export default class MapLayer {
     }
 
     redraw() {
+        this.ctx.scale(this.mapInfo.mapScale, this.mapInfo.mapScale);
         this.ctx.fillStyle = '#C6ECFF';
         this.ctx.fillRect(0, 0, this.mapInfo.width, this.mapInfo.height);
         for (let i = 0; i < this.paths.length; i++) {

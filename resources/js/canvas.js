@@ -6,7 +6,7 @@ import MainLayer from './mainlayer';
 let container = document.getElementById('canvascon');
 let mapLayer, mainLayer;
 
-const mapInfo = {
+let mapInfo = {
     n: 26.4,
     s: 21.7,
     w: 118.0,
@@ -14,11 +14,19 @@ const mapInfo = {
     lonRange: 122.3 - 118.0,
     latRange: 21.7 - 26.4,
     width: 1016,
-    height: 1221
+    height: 1221,
+    mapScale: 1
 };
 
 container.style.minWidth = mapInfo.width + 'px';
 container.style.minHeight = mapInfo.height + 'px';
+
+if (container.offsetWidth > mapInfo.width) {
+    mapInfo.mapScale = container.offsetWidth / mapInfo.width;
+    mapInfo.width = container.offsetWidth;
+    mapInfo.height *= mapInfo.mapScale;
+    container.style.minHeight = mapInfo.height + 'px';
+}
 
 let scale = window.devicePixelRatio || 1;
 
