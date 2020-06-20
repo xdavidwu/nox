@@ -2,7 +2,7 @@ import Station from './station';
 import Popup from './popup';
 
 export default class MainLayer {
-    constructor(stations, mapInfo, canvas) {
+    constructor(stations, mapInfo, canvas, scale) {
         this.stations = [];
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
@@ -20,17 +20,17 @@ export default class MainLayer {
 
         this.canvas.addEventListener('mousemove', this.mouseMove.bind(this));
 
-        this.resize();
-        this.redraw();
+        this.resize(scale);
     }
 
-    resize() {
-        this.scale = window.devicePixelRatio || 1;
+    resize(scale) {
         this.canvas.style.width = this.mapInfo.width + 'px';
         this.canvas.style.height = this.mapInfo.height + 'px';
-        this.canvas.width = this.mapInfo.width * this.scale;
-        this.canvas.height = this.mapInfo.height * this.scale;
-        this.ctx.scale(this.scale, this.scale);
+        this.canvas.width = this.mapInfo.width * scale;
+        this.canvas.height = this.mapInfo.height * scale;
+        this.ctx.scale(scale, scale);
+        this.scale = scale;
+        this.redraw();
     }
 
     redraw() {

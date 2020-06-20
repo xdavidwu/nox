@@ -20,12 +20,13 @@ const mapInfo = {
 container.style.minWidth = mapInfo.width + 'px';
 container.style.minHeight = mapInfo.height + 'px';
 
+let scale = window.devicePixelRatio || 1;
 
 axios.get('images/Taiwan_location_map.svg')
     .then((res) => {
-        mapLayer = new MapLayer(res.data, mapInfo, document.getElementById('maplayer'));
+        mapLayer = new MapLayer(res.data, mapInfo, document.getElementById('maplayer'), scale);
     });
 axios.get('api/stations')
     .then((res) => {
-        mainLayer = new MainLayer(res.data, mapInfo, document.getElementById('canvas'));
+        mainLayer = new MainLayer(res.data, mapInfo, document.getElementById('canvas'), scale);
     });

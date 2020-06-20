@@ -1,5 +1,5 @@
 export default class MapLayer {
-    constructor(path, mapInfo, canvas) {
+    constructor(path, mapInfo, canvas, scale) {
         this.paths = [];
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
@@ -11,17 +11,17 @@ export default class MapLayer {
             this.paths.push(new Path2D(layers[i].getAttribute('d')));
         }
 
-        this.resize();
-        this.redraw();
+        this.resize(scale);
     }
 
-    resize() {
-        let pixelRatio = window.devicePixelRatio || 1;
+    resize(scale) {
         this.canvas.style.width = this.mapInfo.width + 'px';
         this.canvas.style.height = this.mapInfo.height + 'px';
-        this.canvas.width = this.mapInfo.width * pixelRatio;
-        this.canvas.height = this.mapInfo.height * pixelRatio;
-        this.ctx.scale(pixelRatio, pixelRatio);
+        this.canvas.width = this.mapInfo.width * scale;
+        this.canvas.height = this.mapInfo.height * scale;
+        this.ctx.scale(scale, scale);
+        this.scale = scale;
+        this.redraw();
     }
 
     redraw() {
