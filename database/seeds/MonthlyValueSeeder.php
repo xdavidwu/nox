@@ -16,7 +16,13 @@ class MonthlyValueSeeder extends Seeder
         ini_set('memory_limit', '1024M');
         $url = 'https://data.epa.gov.tw/api/3/action/datastore_search';
         $data = '{"resource_id":"4026f97e-60f9-4d8b-9a3d-f2813f6ff2fd","q":"",'.
-            '"filters":{},"limit":999999999,"offset":0}';
+            '"filters":{},"limit":999999999,"offset":0';
+        $month = env('UPDATE_MONTH_FROM', '');
+        if ($month !== '') {
+            echo 'Update from month '.$month."\n";
+            $data = $data.',"custom_filters":[["MonitorMonth","GR","'.$month.'"]]';
+        }
+        $data = $data.'}';
         $options = array(
             'http' => array(
                 'method' => 'POST',
