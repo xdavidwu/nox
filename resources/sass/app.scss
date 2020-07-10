@@ -21,3 +21,9 @@ body {
 .filter-option-inner-inner {
     color: $gray-700;
 }
+
+iframe {
+    border: none;
+    min-height: 300px;
+    width: 100%;
+}

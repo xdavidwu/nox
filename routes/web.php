@@ -22,3 +22,7 @@ Route::get('/raw', 'RawController@search');
 Route::get('/canvas', function () {
     return view('canvas');
 });
+
+Route::get('/grafana', function () {
+    return view('grafana');
+});
