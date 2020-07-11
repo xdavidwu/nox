@@ -37,6 +37,10 @@ body {
     color: #16181b;
 }
 
+.dropdown-menu .dropdown-item {
+    max-width: none;
+}
+
 iframe {
     border: none;
     min-height: 300px;
