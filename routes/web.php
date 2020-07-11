@@ -14,15 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return redirect()->route('map');
+})->name('home');
 
-Route::get('/raw', 'RawController@search');
+Route::get('/raw', 'RawController@search')->name('data');
 
 Route::get('/canvas', function () {
     return view('canvas');
-});
+})->name('map');
 
 Route::get('/grafana', function () {
     return view('grafana');
-});
+})->name('charts');

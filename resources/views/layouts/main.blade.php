@@ -23,20 +23,35 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand mr-auto" href="#">nox</a>
-            <div class="dropdown">
-                <button class="btn bmd-btn-icon dropdown-toggle" style="color: white" data-toggle="dropdown">
-                    <i class="material-icons">more_vert</i>
+        <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <button class="btn bmd-btn-icon" style="color: white" data-toggle="drawer" data-target="#drawer">
+                    <i class="material-icons">menu</i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <button class="dropdown-item" data-toggle="modal" data-target="#licenseModal">Licenses</button>
+                <a class="navbar-brand mr-auto" href="{{ route('home') }}" style="padding-left: 12px">nox</a>
+                <div class="dropdown">
+                    <button class="btn bmd-btn-icon dropdown-toggle" style="color: white" data-toggle="dropdown">
+                        <i class="material-icons">more_vert</i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <button class="dropdown-item" data-toggle="modal" data-target="#licenseModal">Licenses</button>
+                    </div>
                 </div>
+            </nav>
+            <div id="drawer" class="bmd-layout-drawer bg-faded">
+                <header>
+                    <a class="navbar-brand drawer-item ripple" href="{{ route('home') }}">nox</a>
+                </header>
+                <ul class="list-group">
+                    <a class="list-group-item drawer-item ripple" href="{{ route('map') }}">Map</a>
+                    <a class="list-group-item drawer-item ripple" href="{{ route('data') }}">Data</a>
+                    <a class="list-group-item drawer-item ripple" href="{{ route('charts') }}">Charts</a>
+                </ul>
             </div>
-        </nav>
-        <main>
-            @yield('content')
-        </main>
+            <main>
+                @yield('content')
+            </main>
+        </div>
         <div class="modal" id="licenseModal">
             <div class="modal-dialog">
                 <div class="modal-content">

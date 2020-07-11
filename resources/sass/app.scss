@@ -3,6 +3,11 @@
 
 body {
     height: auto;
+    min-height: 100vh;
+}
+
+.bmd-layout-canvas {
+    min-height: 100vh;
 }
 
 .card {
@@ -20,6 +25,16 @@ body {
 
 .filter-option-inner-inner {
     color: $gray-700;
+}
+
+.drawer-item {
+    color: #212529;
+}
+
+.drawer-item:hover {
+    text-decoration: none;
+    background-color: #f8f9fa;
+    color: #16181b;
 }
 
 iframe {
