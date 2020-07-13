@@ -22,3 +22,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/stations', function () {
     return Station::all();
 });
+
+Route::get('/monthly_values', 'ApiController@monthlyValue');
