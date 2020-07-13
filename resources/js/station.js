@@ -11,11 +11,10 @@ export default class Station {
         };
     }
 
-    draw(ctx, mapInfo) {
+    path(ctx, mapInfo) {
         let coord = this.getCoord(mapInfo);
         ctx.beginPath();
         ctx.arc(coord.x, coord.y, this.radius, 0, 2 * Math.PI);
-        ctx.fill();
     }
 
     inRange(pointerInfo, mapInfo) {

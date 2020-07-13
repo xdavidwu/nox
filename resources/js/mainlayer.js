@@ -37,10 +37,11 @@ export default class MainLayer {
 
     redraw() {
         this.ctx.clearRect(0, 0, this.mapInfo.width, this.mapInfo.height);
-        this.ctx.fillStyle = 'red';
+        this.ctx.fillStyle = 'gray';
         for (let station of this.stations) {
             if (station !== this.focusedStation && station !== this.popupLockedStaion) {
-                station.draw(this.ctx, this.mapInfo);
+                station.path(this.ctx, this.mapInfo);
+                this.ctx.fill();
             }
         }
         if (this.popupVisible && ((!this.lastPopup) || this.lastPopupStation !==
@@ -57,12 +58,16 @@ export default class MainLayer {
             else this.popupCoord.y = coord.y + 16;
         }
         if (this.popupLockedStaion) {
-            this.ctx.fillStyle = 'black';
-            this.popupLockedStaion.draw(this.ctx, this.mapInfo);
+            this.ctx.strokeStyle = 'black';
+            this.popupLockedStaion.path(this.ctx, this.mapInfo);
+            this.ctx.fill();
+            this.ctx.stroke();
         }
         if (this.focusedStation && this.focusedStation !== this.popupLockedStaion) {
-            this.ctx.fillStyle = 'blue';
-            this.focusedStation.draw(this.ctx, this.mapInfo);
+            this.ctx.strokeStyle = 'white';
+            this.focusedStation.path(this.ctx, this.mapInfo);
+            this.ctx.fill();
+            this.ctx.stroke();
         }
         if (this.popupVisible) this.lastPopup.draw(this.ctx, this.popupCoord.x, this.popupCoord.y);
     }
