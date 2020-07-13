@@ -1,6 +1,8 @@
 import Station from './station';
 import Popup from './popup';
 
+import {severities, severity_thresholds} from './consts';
+
 export default class MainLayer {
     constructor(stations, mapInfo, canvas, scale) {
         this.stations = [];
@@ -15,6 +17,10 @@ export default class MainLayer {
         this.focusedStation = undefined;
         this.popupLockedStaion = undefined;
 
+        this.data = undefined;
+        this.fields = ['o3', 'pm25', 'pm10', 'co', 'so2', 'no2'];
+        this.month = '2020-05';
+
         for (let station of stations) {
             this.stations.push(new Station(station));
         }
@@ -23,6 +29,7 @@ export default class MainLayer {
         this.canvas.addEventListener('click', this.click.bind(this));
 
         this.resize(scale);
+        this.updateSeverites();
     }
 
     resize(scale) {
@@ -35,11 +42,46 @@ export default class MainLayer {
         this.redraw();
     }
 
+    getStationSeverity(station) {
+        let severity = undefined;
+        if (!this.data) return severity;
+        for (let field of this.fields) {
+            let val = this.data[station.info.id][field];
+            if (val === null || val === undefined) continue;
+            if (severity === undefined) severity = 0;
+            for (let i = 0; i < severities.length; i++) {
+                if (i === severities.length - 1 ||
+                        val <= severity_thresholds[field][severities[i].key]) {
+                    severity = (i > severity) ? i : severity;
+                    break;
+                }
+            }
+        }
+        return severity;
+    }
+
+    updateSeverites() {
+        axios.get('api/monthly_values', {
+            params: {
+                columns: this.fields,
+                month: this.month
+            }
+        }).then((res) => {
+            this.data = res.data;
+            for (let station of this.stations) {
+                station.severity = this.getStationSeverity(station);
+                console.log(station.info.id+' has severity '+station.severity);
+            }
+            this.redraw();
+        });
+    }
+
     redraw() {
         this.ctx.clearRect(0, 0, this.mapInfo.width, this.mapInfo.height);
-        this.ctx.fillStyle = 'gray';
         for (let station of this.stations) {
             if (station !== this.focusedStation && station !== this.popupLockedStaion) {
+                if (station.severity !== undefined) this.ctx.fillStyle = severities[station.severity].color;
+                else this.ctx.fillStyle = 'lightgray';
                 station.path(this.ctx, this.mapInfo);
                 this.ctx.fill();
             }
@@ -58,12 +100,16 @@ export default class MainLayer {
             else this.popupCoord.y = coord.y + 16;
         }
         if (this.popupLockedStaion) {
+            if (this.popupLockedStaion.severity !== undefined) this.ctx.fillStyle = severities[this.popupLockedStaion.severity].color;
+            else this.ctx.fillStyle = 'lightgray';
             this.ctx.strokeStyle = 'black';
             this.popupLockedStaion.path(this.ctx, this.mapInfo);
             this.ctx.fill();
             this.ctx.stroke();
         }
         if (this.focusedStation && this.focusedStation !== this.popupLockedStaion) {
+            if (this.focusedStation.severity !== undefined) this.ctx.fillStyle = severities[this.focusedStation.severity].color;
+            else this.ctx.fillStyle = 'lightgray';
             this.ctx.strokeStyle = 'white';
             this.focusedStation.path(this.ctx, this.mapInfo);
             this.ctx.fill();
