@@ -75,3 +75,30 @@ export const severity_thresholds = {
         very_unhealthy: 1249
     }
 }
+
+export const indices = {
+    o3: {
+        name: '臭氧',
+        unit: 'ppb'
+    },
+    pm25: {
+        name: 'PM₂.₅',
+        unit: 'μg/m³'
+    },
+    pm10: {
+        name: 'PM₁₀',
+        unit: 'μg/m³'
+    },
+    co: {
+        name: '一氧化碳',
+        unit: 'ppm'
+    },
+    so2: {
+        name: '二氧化硫',
+        unit: 'ppb'
+    },
+    no2: {
+        name: '二氧化氮',
+        unit: 'ppb'
+    }
+}

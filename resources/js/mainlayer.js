@@ -1,7 +1,7 @@
 import Station from './station';
 import Popup from './popup';
 
-import {severities, severity_thresholds} from './consts';
+import {severities, severity_thresholds, indices} from './consts';
 
 export default class MainLayer {
     constructor(stations, mapInfo, canvas, scale) {
@@ -90,8 +90,8 @@ export default class MainLayer {
     getStationText(station) {
         let text = station.getText();
         for (let field of this.fields) {
-            text += '\n' + field + ': ';
-            let val = this.data[station.info.id][field];
+            text += '\n' + indices[field].name + ': ';
+            let val = this.data[station.info.id][field] + ' ' + indices[field].unit;
             text += (val !== undefined) ? val : '(no data)';
         }
         if (station.severity !== undefined)
