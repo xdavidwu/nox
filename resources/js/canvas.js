@@ -4,7 +4,7 @@ import MapLayer from './maplayer';
 import MainLayer from './mainlayer';
 
 let container = document.getElementById('canvascon');
-let mapLayer, mainLayer;
+let mapLayer = undefined, mainLayer = undefined;
 
 let mapInfo = {
     n: 26.4,
@@ -18,15 +18,22 @@ let mapInfo = {
     mapScale: 1
 };
 
-//container.style.minWidth = mapInfo.width + 'px';
-//container.style.minHeight = mapInfo.height + 'px';
-
-//if (container.offsetWidth > mapInfo.width) {
-    mapInfo.mapScale = container.offsetWidth / mapInfo.width;
+function calculateSize() {
+    mapInfo.mapScale = container.offsetWidth / 1016;
     mapInfo.width = container.offsetWidth;
-    mapInfo.height *= mapInfo.mapScale;
+    mapInfo.height = 1221 / 1016 * container.offsetWidth;
     container.style.minHeight = mapInfo.height + 'px';
-//}
+}
+
+calculateSize();
+
+window.onresize = () => {
+    console.log('resize');
+    calculateSize();
+    let scale = window.devicePixelRatio || 1;
+    if (mapLayer !== undefined) mapLayer.resize(scale);
+    if (mainLayer !== undefined) mainLayer.resize(scale);
+};
 
 let scale = window.devicePixelRatio || 1;
 

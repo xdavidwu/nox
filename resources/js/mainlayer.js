@@ -45,6 +45,7 @@ export default class MainLayer {
         this.canvas.style.height = this.mapInfo.height + 'px';
         this.canvas.width = this.mapInfo.width * scale;
         this.canvas.height = this.mapInfo.height * scale;
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.scale(scale, scale);
         this.scale = scale;
         this.redraw();
