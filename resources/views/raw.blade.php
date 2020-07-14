@@ -14,6 +14,7 @@
                                 min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
                                 max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
                                 name="month_after" pattern="[0-9]{4}-[0-9]{2}"
+                                title="YYYY-MM (西元年份-月份, 需補零)"
                                 value="{{ request()->input('month_after') }}">
                         </div>
                     </div>
@@ -26,6 +27,7 @@
                                 min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
                                 max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
                                 name="month_before" pattern="[0-9]{4}-[0-9]{2}"
+                                title="YYYY-MM (西元年份-月份, 需補零)"
                                 value="{{ request()->input('month_before') }}">
                         </div>
                     </div>
