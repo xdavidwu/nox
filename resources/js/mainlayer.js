@@ -30,6 +30,14 @@ export default class MainLayer {
 
         this.resize(scale);
         this.updateSeverites();
+
+        let mMainLayer = this;
+        $('#options').submit(function() {
+            mMainLayer.fields = $('#indices').val();
+            mMainLayer.month = $('#month').val();
+            mMainLayer.updateSeverites();
+            return false;
+        });
     }
 
     resize(scale) {
@@ -61,6 +69,7 @@ export default class MainLayer {
     }
 
     updateSeverites() {
+        $('#canvastitle').html('Map (loading data...)');
         axios.get('api/monthly_values', {
             params: {
                 columns: this.fields,
@@ -72,8 +81,21 @@ export default class MainLayer {
                 station.severity = this.getStationSeverity(station);
                 console.log(station.info.id+' has severity '+station.severity);
             }
+            $('#canvastitle').html('Map');
             this.redraw();
         });
+    }
+
+    getStationText(station) {
+        let text = station.getText();
+        for (let field of this.fields) {
+            text += '\n' + field + ': ';
+            let val = this.data[station.info.id][field];
+            text += (val !== undefined) ? val : '(no data)';
+        }
+        if (station.severity !== undefined)
+            text += '\n狀態: ' + severities[station.severity].description;
+        return text;
     }
 
     redraw() {
@@ -89,7 +111,7 @@ export default class MainLayer {
         if (this.popupVisible && ((!this.lastPopup) || this.lastPopupStation !==
                 (this.popupLockedStaion ? this.popupLockedStaion : this.focusedStation))) {
             this.lastPopupStation = (this.popupLockedStaion ? this.popupLockedStaion : this.focusedStation);
-            this.lastPopup = new Popup(this.lastPopupStation.getText(), 12, this.scale);
+            this.lastPopup = new Popup(this.getStationText(this.lastPopupStation), 12, this.scale);
 
             const coord = this.lastPopupStation.getCoord(this.mapInfo);
             if (coord.x + this.lastPopup.width > this.mapInfo.width)
