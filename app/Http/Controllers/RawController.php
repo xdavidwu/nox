@@ -29,7 +29,7 @@ class RawController extends Controller
             $query = $query->whereIn('station_id', $req->input('stations'));
         }
 
-        $values = $query->paginate(64)->appends($req->except('page'));
+        $values = $query->paginate(32)->appends($req->except('page'));
 
         return view('raw', [ 'values' => $values ]);
     }

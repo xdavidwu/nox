@@ -59,10 +59,10 @@
         <div class="card">
             <div class="card-header">Result</div>
             <div class="card-body">
-                <table class="table" style="overflow: scroll">
+                <table class="table table-striped table-hover table-sm table-responsive">
                     <thead>
                         <tr>
-                            <th scope="col">測站</th>
+                            <th scope="col" style="word-break: keep-all">測站</th>
                             <th scope="col">月份</th>
                             @foreach(\App\Consts::INDICES as $index)
                                 <th scope="col">{{ $index['name'] }}</th>

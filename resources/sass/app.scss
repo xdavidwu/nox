@@ -46,3 +46,24 @@ iframe {
     min-height: 300px;
     width: 100%;
 }
+
+th:first-child, td:first-child {
+    position: sticky;
+    left: 0px;
+}
+
+th:first-child {
+    background-color: #ffffff;
+}
+
+.table-striped tbody td:first-child {
+    background-color: #ffffff;
+}
+
+.table-striped tbody tr:nth-of-type(2n+1) td:first-child {
+    background-color: #f2f2f2;
+}
+
+.table-striped tbody tr:hover td:first-child {
+    background-color: #ececec;
+}
