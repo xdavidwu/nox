@@ -17,7 +17,7 @@
                 <button class="btn bmd-btn-icon" style="color: white" data-toggle="drawer" data-target="#drawer">
                     <i class="material-icons">menu</i>
                 </button>
-                <a class="navbar-brand mr-auto" href="{{ route('home') }}" style="padding-left: 16px">nox</a>
+                <a class="navbar-brand mr-auto" href="{{ route('home') }}" style="margin-left: 16px">nox</a>
                 @yield('navbutton')
                 <div class="dropdown">
                     <button class="btn bmd-btn-icon navbutton dropdown-toggle" data-toggle="dropdown">
