@@ -17,9 +17,10 @@
                 <button class="btn bmd-btn-icon" style="color: white" data-toggle="drawer" data-target="#drawer">
                     <i class="material-icons">menu</i>
                 </button>
-                <a class="navbar-brand mr-auto" href="{{ route('home') }}" style="padding-left: 12px">nox</a>
+                <a class="navbar-brand mr-auto" href="{{ route('home') }}" style="padding-left: 16px">nox</a>
+                @yield('navbutton')
                 <div class="dropdown">
-                    <button class="btn bmd-btn-icon dropdown-toggle" style="color: white" data-toggle="dropdown">
+                    <button class="btn bmd-btn-icon navbutton dropdown-toggle" data-toggle="dropdown">
                         <i class="material-icons">more_vert</i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -41,6 +42,7 @@
                 @yield('content')
             </main>
         </div>
+        @yield('modal')
         <div class="modal" id="licenseModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -88,8 +90,8 @@
                     <div class="modal-footer">
                         <button class="btn btn-primary" data-dismiss="modal">關閉</button>
                     </div>
-                <div>
-            <div>
+                </div>
+            </div>
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
         @yield('script')

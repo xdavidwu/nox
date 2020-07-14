@@ -54,3 +54,33 @@
 <script src="{{ asset('js/canvas.js') }}"></script>
 @endsection
 
+@section('navbutton')
+<button class="btn bmd-btn-icon navbutton" data-toggle="modal" data-target="#helpModal">
+    <i class="material-icons">help</i>
+</button>
+@endsection
+
+@section('modal')
+<div class="modal" id="helpModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">說明</h5>
+            </div>
+            <div class="modal-body">
+                <h6>指標狀態分類</h6>
+                本站指標狀態分類及顏色參考
+                <a href="https://airtw.epa.gov.tw/CHT/Information/Standard/AirQualityIndicator.aspx">行政院環保署 - 空氣品質監測網 - 空氣品質指標</a>
+                中的『日空氣品質指標』，
+                原分類方法資料多為單日內長時間平均值，
+                這裡直接套用月值，結果僅供參考。
+                如有更適合長時間資料的分類方法，
+                歡迎提出修正。
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">關閉</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
