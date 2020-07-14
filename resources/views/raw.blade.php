@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', '資料')
+
 @section('content')
 <div class="container">
     <div class="justify-content-center">
