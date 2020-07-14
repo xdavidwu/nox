@@ -19,13 +19,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="indices" class="bmd-label-floating">Indices</label>
-                        <select id="indices" class="form-control selectpicker" autocomplete="off" multiple>
-                            <option value="o3" selected>O3</option>
-                            <option value="pm25" selected>PM2.5</option>
-                            <option value="pm10" selected>PM10</option>
-                            <option value="co" selected>CO</option>
-                            <option value="so2" selected>SO2</option>
-                            <option value="no2" selected>NO2</option>
+                        <select id="indices" class="form-control selectpicker"
+                            autocomplete="off" multiple>
+                            @foreach(array('o3', 'pm25', 'pm10', 'co', 'so2', 'no2') as $index)
+                                <option value="{{ $index }}" selected>
+                                    {{ \App\Consts::INDICES[$index]['name'] }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
