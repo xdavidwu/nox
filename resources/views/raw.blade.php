@@ -65,7 +65,11 @@
                             <th scope="col" style="word-break: keep-all">測站</th>
                             <th scope="col">月份</th>
                             @foreach(\App\Consts::INDICES as $index)
-                                <th scope="col">{{ $index['name'] }}</th>
+                                @if($index['unit'] !== '')
+                                    <th scope="col">{{ $index['name'].' ('.$index['unit'].')' }}</th>
+                                @else
+                                    <th scope="col">{{ $index['name'] }}</th>
+                                @endif
                             @endforeach
                         </tr>
                     </thead>
