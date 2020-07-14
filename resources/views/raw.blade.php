@@ -7,7 +7,7 @@
             <div class="card-header">Query</div>
             <div class="card-body" style="overflow: visible">
                 <form method="GET" autocomplete="off" class="form-row align-items-center">
-                    <div class="col">
+                    <div class="col-6 col-md-3 col-lg-2">
                         <div class="form-group">
                             <label for="month_after" class="bmd-label-floating">Month after</label>
                             <input id="month_after" class="form-control" type="month"
@@ -19,7 +19,7 @@
                     </div>
                     {{-- TODO: dedup --}}
                     {{-- TODO: month input compatibility workarounds (when degarded to text) --}}
-                    <div class="col">
+                    <div class="col-6 col-md-3 col-lg-2">
                         <div class="form-group">
                             <label for="month_before" class="bmd-label-floating">Month before</label>
                             <input id="month_before" class="form-control" type="month"
@@ -29,7 +29,7 @@
                                 value="{{ request()->input('month_before') }}">
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label for="stations" class="bmd-label-floating">Stations</label>
                             <select id="stations" class="form-control selectpicker"
@@ -50,7 +50,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-1">
+                    <div class="col col-md col-lg-2">
                         <button class="btn btn-raised btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
