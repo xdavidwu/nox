@@ -3,6 +3,8 @@ window.axios = require('axios');
 import MapLayer from './maplayer';
 import MainLayer from './mainlayer';
 
+$('#canvastitle').html('地圖 (資料載入中...)');
+
 let container = document.getElementById('canvascon');
 let mapLayer = undefined, mainLayer = undefined;
 

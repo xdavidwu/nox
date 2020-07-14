@@ -4,12 +4,12 @@
 <div class="container">
     <div class="justify-content-center">
         <div class="card">
-            <div class="card-header">Query</div>
+            <div class="card-header">搜尋</div>
             <div class="card-body" style="overflow: visible">
                 <form method="GET" autocomplete="off" class="form-row align-items-center">
                     <div class="col-6 col-md-3 col-lg-2">
                         <div class="form-group">
-                            <label for="month_after" class="bmd-label-floating">Month after</label>
+                            <label for="month_after" class="bmd-label-floating">起始月份</label>
                             <input id="month_after" class="form-control" type="month"
                                 min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
                                 max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
@@ -21,7 +21,7 @@
                     {{-- TODO: month input compatibility workarounds (when degarded to text) --}}
                     <div class="col-6 col-md-3 col-lg-2">
                         <div class="form-group">
-                            <label for="month_before" class="bmd-label-floating">Month before</label>
+                            <label for="month_before" class="bmd-label-floating">結束月份</label>
                             <input id="month_before" class="form-control" type="month"
                                 min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
                                 max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6">
                         <div class="form-group">
-                            <label for="stations" class="bmd-label-floating">Stations</label>
+                            <label for="stations" class="bmd-label-floating">測站</label>
                             <select id="stations" class="form-control selectpicker"
                                 name="stations[]" data-live-search="true" multiple>
                                 {{-- TODO: reduce query --}}
@@ -51,13 +51,13 @@
                         </div>
                     </div>
                     <div class="col col-md col-lg-2">
-                        <button class="btn btn-raised btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-raised btn-primary" type="submit">送出</button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="card">
-            <div class="card-header">Result</div>
+            <div class="card-header">結果</div>
             <div class="card-body">
                 <table class="table table-striped table-hover table-sm table-responsive">
                     <thead>

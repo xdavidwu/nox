@@ -43,9 +43,9 @@
                     <a class="navbar-brand drawer-item ripple" href="{{ route('home') }}">nox</a>
                 </header>
                 <ul class="list-group">
-                    <a class="list-group-item drawer-item ripple" href="{{ route('map') }}">Map</a>
-                    <a class="list-group-item drawer-item ripple" href="{{ route('data') }}">Data</a>
-                    <a class="list-group-item drawer-item ripple" href="{{ route('charts') }}">Charts</a>
+                    <a class="list-group-item drawer-item ripple" href="{{ route('map') }}">地圖</a>
+                    <a class="list-group-item drawer-item ripple" href="{{ route('data') }}">資料</a>
+                    <a class="list-group-item drawer-item ripple" href="{{ route('charts') }}">圖表</a>
                 </ul>
             </div>
             <main>
@@ -97,7 +97,7 @@
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" data-dismiss="modal">關閉</button>
                     </div>
                 <div>
             <div>

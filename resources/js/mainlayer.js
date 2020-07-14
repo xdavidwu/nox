@@ -70,7 +70,7 @@ export default class MainLayer {
     }
 
     updateSeverites() {
-        $('#canvastitle').html('Map (loading data...)');
+        $('#canvastitle').html('地圖 (資料載入中...)');
         axios.get('api/monthly_values', {
             params: {
                 columns: this.fields,
@@ -80,9 +80,8 @@ export default class MainLayer {
             this.data = res.data;
             for (let station of this.stations) {
                 station.severity = this.getStationSeverity(station);
-                console.log(station.info.id+' has severity '+station.severity);
             }
-            $('#canvastitle').html('Map');
+            $('#canvastitle').html('地圖');
             this.redraw();
         });
     }
@@ -92,7 +91,7 @@ export default class MainLayer {
         for (let field of this.fields) {
             text += '\n' + indices[field].name + ': ';
             let val = this.data[station.info.id][field] + ' ' + indices[field].unit;
-            text += (val !== undefined) ? val : '(no data)';
+            text += (val !== undefined) ? val : '(無資料)';
         }
         if (station.severity !== undefined)
             text += '\n狀態: ' + severities[station.severity].description;
