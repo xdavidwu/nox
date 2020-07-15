@@ -50,6 +50,9 @@
                         <h5 class="modal-title">Licenses</h5>
                     </div>
                     <div class="modal-body">
+                        This website is licensed under <a href="https://opensource.org/licenses/MIT">MIT license</a>.
+                        The source code of this website can be retrieved at <a href="{{ env('SOURCE_URL') }}">{{ env('SOURCE_URL') }}</a>.
+                        This website also make use of following works:
                         <h6>Data</h6>
                         <ul>
                             <li>

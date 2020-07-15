@@ -25,6 +25,8 @@ Run `npm run dev` or `npm run prod` to build the frontend, depending on whether 
 
 Like other Laravel projects, create `.env` using `.env.example` as a template.
 
+For production instance, you can provide a link to your souce code with `SOURCE_URL` in `.env`.
+
 A database is required. Other components are not used as for now.
 
 Run `php artisan db:seed --class StationSeeder` to download station info.
@@ -58,3 +60,9 @@ env UPDATE_MONTH_FROM=202005 php artisan db:seed --class=MonthlyValueSeeder
 ```
 
 This updates value starting from May of 2020. If you do not specify the month to start with, it will act as an initial import and download all data available.
+
+## License
+
+MIT
+
+For licenses of data, files, libraries directly used by this project, check out the menu in the upper right corner of any page by this project. You can also check `resources/views/layouts/main.blade.php` in source form.
