@@ -90,8 +90,8 @@ export default class MainLayer {
         let text = station.getText();
         for (let field of this.fields) {
             text += '\n' + indices[field].name + ': ';
-            let val = this.data[station.info.id][field] + ' ' + indices[field].unit;
-            text += (val !== undefined) ? val : '(無資料)';
+            let val = this.data[station.info.id][field];
+            text += (val !== null && val !== undefined) ? val + ' ' + indices[field].unit : '(無資料)';
         }
         if (station.severity !== undefined)
             text += '\n狀態: ' + severities[station.severity].description;
