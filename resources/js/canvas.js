@@ -30,7 +30,6 @@ function calculateSize() {
 calculateSize();
 
 window.onresize = () => {
-    console.log('resize');
     calculateSize();
     let scale = window.devicePixelRatio || 1;
     if (mapLayer !== undefined) mapLayer.resize(scale);
