@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>@yield('title') - nox</title>
+        <title>@yield('title') - {{ config('app.name') }}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
@@ -17,7 +17,7 @@
                 <button class="btn bmd-btn-icon" style="color: white" data-toggle="drawer" data-target="#drawer">
                     <i class="material-icons">menu</i>
                 </button>
-                <a class="navbar-brand mr-auto" href="{{ route('home') }}" style="margin-left: 16px">nox</a>
+                <a class="navbar-brand mr-auto" href="{{ route('home') }}" style="margin-left: 16px">{{ config('app.name') }}</a>
                 @yield('navbutton')
                 <div class="dropdown">
                     <button class="btn bmd-btn-icon navbutton dropdown-toggle" data-toggle="dropdown">
@@ -30,7 +30,7 @@
             </nav>
             <div id="drawer" class="bmd-layout-drawer bg-faded">
                 <header>
-                    <a class="navbar-brand drawer-item ripple" href="{{ route('home') }}">nox</a>
+                    <a class="navbar-brand drawer-item ripple" href="{{ route('home') }}">{{ config('app.name') }}</a>
                 </header>
                 <ul class="list-group">
                     <a class="list-group-item drawer-item ripple" href="{{ route('map') }}">地圖</a>
