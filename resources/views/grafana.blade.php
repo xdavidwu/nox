@@ -19,7 +19,7 @@
                             </option>
                     @endforeach
                 </select>
-                <iframe src="https://grafana.parto.nctu.me/d-solo/pty476GGz/nox?orgId=2&panelId=3"></iframe>
+                <iframe src="{!! env('GRAFANA_BASE_URL').'3' !!}"></iframe>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
 <script>
     $('#iframesrc').change(function() {
         $('iframe').attr('src',
-            'https://grafana.parto.nctu.me/d-solo/pty476GGz/nox?orgId=2&panelId=' + $(this).val());
+            '{!! env('GRAFANA_BASE_URL') !!}' + $(this).val());
     });
 </script>
 @endsection
