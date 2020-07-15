@@ -50,6 +50,13 @@
                         <h5 class="modal-title">Licenses</h5>
                     </div>
                     <div class="modal-body">
+                        <h6>Data</h6>
+                        <ul>
+                            <li>
+                                空氣品質監測月值 - 行政院環境保護署環境監測及資訊處 -
+                                <a href="https://data.gov.tw/license">Open Government Data License, version 1.0</a>
+                            </li>
+                        </ul>
                         <h6>Files</h6>
                         <ul>
                             <li>
