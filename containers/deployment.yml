@@ -25,7 +25,7 @@ spec:
           imagePullPolicy: Always
           securityContext:
             capabilities:
-              add: ["SETUID", "SETGID", "DAC_OVERRIDE"]
+              add: ["SETUID", "SETGID", "DAC_OVERRIDE", "CHOWN"]
         - name: ${CI_PROJECT_PATH_SLUG}-fpm
           image: ${CI_REGISTRY_IMAGE}/fpm:${CI_ENVIRONMENT_SLUG}
           imagePullPolicy: Always
