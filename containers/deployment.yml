@@ -21,13 +21,13 @@ spec:
     spec:
       containers:
         - name: ${CI_PROJECT_PATH_SLUG}-nginx
-          image: ${CI_REGISTRY_IMAGE}-nginx:${CI_ENVIRONMENT_SLUG}
+          image: ${CI_REGISTRY_IMAGE}/nginx:${CI_ENVIRONMENT_SLUG}
           imagePullPolicy: Always
           securityContext:
             capabilities:
               add: ["SETUID", "SETGID"]
         - name: ${CI_PROJECT_PATH_SLUG}-fpm
-          image: ${CI_REGISTRY_IMAGE}-fpm:${CI_ENVIRONMENT_SLUG}
+          image: ${CI_REGISTRY_IMAGE}/fpm:${CI_ENVIRONMENT_SLUG}
           imagePullPolicy: Always
           securityContext:
             capabilities:
@@ -37,7 +37,7 @@ spec:
               mountPath: /srv/http/nox/.env
               subPath: .env
         - name: ${CI_PROJECT_PATH_SLUG}-mariadb
-          image: ${CI_REGISTRY_IMAGE}-mariadb:${CI_ENVIRONMENT_SLUG}
+          image: ${CI_REGISTRY_IMAGE}/mariadb:${CI_ENVIRONMENT_SLUG}
           imagePullPolicy: Always
           securityContext:
             capabilities:
