@@ -1,0 +1,3 @@
+FROM alpine:latest
+RUN apk add mariadb
+CMD /usr/bin/mysqld_safe
