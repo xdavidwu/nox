@@ -36,15 +36,15 @@ spec:
             - name: configs
               mountPath: /srv/http/nox/.env
               subPath: .env
-        - name: ${CI_PROJECT_PATH_SLUG}-mariadb
-          image: ${CI_REGISTRY_IMAGE}/mariadb:${CI_ENVIRONMENT_SLUG}
-          imagePullPolicy: Always
-          securityContext:
-            capabilities:
-              add: ["SETUID", "SETGID"]
-          volumeMounts:
-            - name: data
-              mountPath: /var/lib/mysql
+#        - name: ${CI_PROJECT_PATH_SLUG}-mariadb
+#          image: ${CI_REGISTRY_IMAGE}/mariadb:${CI_ENVIRONMENT_SLUG}
+#          imagePullPolicy: Always
+#          securityContext:
+#            capabilities:
+#              add: ["SETUID", "SETGID"]
+#          volumeMounts:
+#            - name: data
+#              mountPath: /var/lib/mysql
       volumes:
         - name: configs
           configMap:
