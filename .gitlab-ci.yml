@@ -2,6 +2,7 @@ stages:
   - lint
   - build
   - package
+  - scan
   - deploy
 
 phpcs:
@@ -83,6 +84,37 @@ package-mariadb:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/containers/Dockerfile-mariadb --destination $CI_REGISTRY_IMAGE/mariadb:production
   only:
     - master
+
+include:
+  - template: Security/Container-Scanning.gitlab-ci.yml
+
+container_scanning:
+  stage: scan
+  rules:
+    - when: never
+  variables:
+    CI_APPLICATION_TAG: production
+
+nginx-container-scanning:
+  extends: container_scanning
+  variables:
+    CI_APPLICATION_REPOSITORY: $CI_REGISTRY_IMAGE/nginx
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+
+fpm-container-scanning:
+  extends: container_scanning
+  variables:
+    CI_APPLICATION_REPOSITORY: $CI_REGISTRY_IMAGE/fpm
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+
+mariadb-container-scanning:
+  extends: container_scanning
+  variables:
+    CI_APPLICATION_REPOSITORY: $CI_REGISTRY_IMAGE/mariadb
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
 
 deploy:
   stage: deploy
