@@ -15,7 +15,8 @@
                             <input id="month" class="form-control" type="month"
                                 min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
                                 max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
-                                pattern="[0-9]{4}-[0-9]{2}" value="2020-05"
+                                value="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
+                                pattern="[0-9]{4}-[0-9]{2}"
                                 title="YYYY-MM (西元年份-月份, 需補零)"
                                 autocomplete="off">
                         </div>

@@ -19,7 +19,7 @@ export default class MainLayer {
 
         this.data = undefined;
         this.fields = ['o3', 'pm25', 'pm10', 'co', 'so2', 'no2'];
-        this.month = $('#month').attr('max');
+        this.month = $('#month').val();
 
         for (let station of stations) {
             this.stations.push(new Station(station));
