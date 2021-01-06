@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 use App\MonthlyValue;
 use App\Station;
 
@@ -19,6 +20,9 @@ class MonthlyValueSeeder extends Seeder
             '"filters":{},"limit":999999999,"offset":0';
         $month = env('UPDATE_MONTH_FROM', '');
         if ($month !== '') {
+            if ($month === 'auto') {
+                $month = Carbon::parse(MonthlyValue::max('month'))->subMonth(1)->format('Y-m');
+            }
             echo 'Update from month '.$month."\n";
             $data = $data.',"custom_filters":[["MonitorMonth","GR","'.$month.'"]]';
         }

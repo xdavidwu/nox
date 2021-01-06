@@ -53,13 +53,13 @@ If your panel ids differ from ours, update the mapping in `app/Consts.php`.
 
 ### Updating data
 
-The monthly value data can be updated using `MonthlyValueSeeder`, with an environment varaible specifing the month to begins with. For example:
+The monthly value data can be updated using `MonthlyValueSeeder`, with an environment variable specifing the month to begins with. For example:
 
 ```
 env UPDATE_MONTH_FROM=202005 php artisan db:seed --class=MonthlyValueSeeder
 ```
 
-This updates value starting from May of 2020. If you do not specify the month to start with, it will act as an initial import and download all data available.
+This updates value starting from May of 2020. If you do not specify the month to start with, it will act as an initial import and download all data available. If `auto`, the starting month will be one month before last month with data.
 
 ## License
 
