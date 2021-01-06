@@ -127,11 +127,13 @@ deploy:
     name: production
   before_script:
     - apk add gettext
-    - wget https://storage.googleapis.com/kubernetes-release/release/v1.18.6/bin/linux/amd64/kubectl
+    - wget https://storage.googleapis.com/kubernetes-release/release/v1.20.0/bin/linux/amd64/kubectl
     - chmod +x kubectl
   script:
-    - envsubst < containers/deployment.yml > out.yml
+    - envsubst < containers/deployment.yml > deployment.yml
+    - envsubst < containers/cronjob.yml > cronjob.yml
     - ./kubectl -n $KUBE_NAMESPACE create secret generic ${CI_PROJECT_PATH_SLUG}-ceph --from-file=key=$CEPH_KEY --dry-run=client -o yaml | ./kubectl -n $KUBE_NAMESPACE apply -f -
     - ./kubectl -n $KUBE_NAMESPACE create configmap ${CI_PROJECT_PATH_SLUG}-configs --from-file=.env=$PROD_ENV --dry-run=client -o yaml | ./kubectl -n $KUBE_NAMESPACE apply -f -
-    - ./kubectl -n $KUBE_NAMESPACE apply -f out.yml
+    - ./kubectl -n $KUBE_NAMESPACE apply -f deployment.yml
+    - ./kubectl -n $KUBE_NAMESPACE apply -f cronjob.yml
 
