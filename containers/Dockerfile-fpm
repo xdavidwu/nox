@@ -1,5 +1,6 @@
 FROM alpine:latest
 RUN apk add php7-fpm php7-dom php7-fileinfo php7-json php7-xml php7-mbstring php7-openssl php7-tokenizer php7-pdo_mysql php7-session
+RUN chown nobody:nobody /var/log/php7
 ADD app.tar /srv/http/nox
 RUN chown -R nobody:nobody /srv/http/nox/storage
 USER nobody:nobody
