@@ -29,6 +29,7 @@ spec:
           readinessProbe:
             httpGet:
               port: 8000
+              path: /canvas
         - name: ${CI_PROJECT_PATH_SLUG}-fpm
           image: ${CI_REGISTRY_IMAGE}/fpm:${CI_ENVIRONMENT_SLUG}
           imagePullPolicy: Always
