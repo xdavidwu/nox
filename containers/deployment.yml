@@ -69,6 +69,7 @@ spec:
     - name: nox-http
       protocol: TCP
       port: 80
+      targetPort: 8000
     - name: nox-mariadb
       protocol: TCP
       port: 3306

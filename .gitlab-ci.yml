@@ -32,6 +32,7 @@ build:
   script:
     - npm run prod
     - echo "$CI_COMMIT_SHA" > version
+    - chmod -R g=r,o=r .
       # excluding vcs and node_modules, as they are not required for running
       # and are potentially fat
     - tar -cf app.tar --exclude-vcs --exclude=node_modules --exclude=app.tar .
