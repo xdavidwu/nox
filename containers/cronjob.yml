@@ -16,7 +16,6 @@ spec:
               args:
                 - -c
                 - >
-                  apk add php7 &&
                   cd /srv/http/nox &&
                   env UPDATE_MONTH_FROM=auto php artisan db:seed --force --class=MonthlyValueSeeder
               volumeMounts:
