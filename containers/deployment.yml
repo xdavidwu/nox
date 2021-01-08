@@ -26,6 +26,9 @@ spec:
           securityContext:
             capabilities:
               add: ["SETUID", "SETGID", "DAC_OVERRIDE", "CHOWN"]
+          readinessProbe:
+            httpGet:
+              port: 8000
         - name: ${CI_PROJECT_PATH_SLUG}-fpm
           image: ${CI_REGISTRY_IMAGE}/fpm:${CI_ENVIRONMENT_SLUG}
           imagePullPolicy: Always
