@@ -16,7 +16,7 @@ spec:
                 - -c
                 - >
                   cd /srv/http/nox &&
-                  env UPDATE_MONTH_FROM=auto php artisan db:seed --force --class=MonthlyValueSeeder
+                  env UPDATE_MONTH_FROM=auto php8 artisan db:seed --force --class=MonthlyValueSeeder
               volumeMounts:
                 - name: configs
                   mountPath: /srv/http/nox/.env
