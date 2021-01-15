@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: ${CI_PROJECT_PATH_SLUG}-data-updates
+  name: nox-data-updates
 spec:
   schedule: "0 0 20 * *"
   jobTemplate:
@@ -9,9 +9,8 @@ spec:
       template:
         spec:
           containers:
-            - name: ${CI_PROJECT_PATH_SLUG}-data-updates
-              image: ${CI_REGISTRY_IMAGE}/fpm:${CI_ENVIRONMENT_SLUG}
-              imagePullPolicy: Always
+            - name: nox-data-updates
+              image: registry.eglo.ga/placeholder2
               command: ['/bin/sh']
               args:
                 - -c
@@ -25,5 +24,5 @@ spec:
           volumes:
             - name: configs
               configMap:
-                name: ${CI_PROJECT_PATH_SLUG}-configs
+                name: configs
           restartPolicy: OnFailure

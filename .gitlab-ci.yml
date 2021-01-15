@@ -7,7 +7,7 @@ stages:
 
 phpcs:
   stage: lint
-  image: alpine:edge
+  image: alpine:latest
   variables:
     COMPOSER_HOME: .composer
   before_script:
@@ -22,7 +22,7 @@ phpcs:
 
 build:
   stage: build
-  image: alpine:edge
+  image: alpine:latest
   before_script:
     - >
         apk add composer npm php7-dom php7-fileinfo php7-json php7-xml
@@ -54,7 +54,7 @@ package-nginx:
     entrypoint: [""]
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/containers/Dockerfile-nginx --destination $CI_REGISTRY_IMAGE/nginx:production
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/containers/Dockerfile-nginx --destination $CI_REGISTRY_IMAGE/nginx:$CI_PIPELINE_ID
   only:
     - master
 
@@ -68,23 +68,23 @@ package-fpm:
     entrypoint: [""]
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/containers/Dockerfile-fpm --destination $CI_REGISTRY_IMAGE/fpm:production
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/containers/Dockerfile-fpm --destination $CI_REGISTRY_IMAGE/fpm:$CI_PIPELINE_ID
   only:
     - master
 
-package-mariadb:
-  stage: package
-  only:
-    refs:
-      - master
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  script:
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/containers/Dockerfile-mariadb --destination $CI_REGISTRY_IMAGE/mariadb:production
-  only:
-    - master
+#package-mariadb:
+#  stage: package
+#  only:
+#    refs:
+#      - master
+#  image:
+#    name: gcr.io/kaniko-project/executor:debug
+#    entrypoint: [""]
+#  script:
+#    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+#    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/containers/Dockerfile-mariadb --destination $CI_REGISTRY_IMAGE/mariadb:production
+#  only:
+#    - master
 
 include:
   - template: Security/Container-Scanning.gitlab-ci.yml
@@ -94,7 +94,7 @@ container_scanning:
   rules:
     - when: never
   variables:
-    CI_APPLICATION_TAG: production
+    CI_APPLICATION_TAG: $CI_PIPELINE_ID
 
 nginx-container-scanning:
   extends: container_scanning
@@ -110,31 +110,30 @@ fpm-container-scanning:
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
 
-mariadb-container-scanning:
-  extends: container_scanning
-  variables:
-    CI_APPLICATION_REPOSITORY: $CI_REGISTRY_IMAGE/mariadb
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+#mariadb-container-scanning:
+#  extends: container_scanning
+#  variables:
+#    CI_APPLICATION_REPOSITORY: $CI_REGISTRY_IMAGE/mariadb
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "master"'
 
 deploy:
   stage: deploy
-  only:
-    refs:
-      - master
   image:
     name: alpine:latest
   environment:
     name: production
+  only:
+    - master
   before_script:
     - apk add gettext
+    - cd containers
     - wget https://storage.googleapis.com/kubernetes-release/release/v1.20.0/bin/linux/amd64/kubectl
     - chmod +x kubectl
+    - wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.9.1/kustomize_v3.9.1_linux_amd64.tar.gz -O - | gunzip | tar -xf -
+    - chmod +x kustomize
   script:
-    - envsubst < containers/deployment.yml > deployment.yml
-    - envsubst < containers/cronjob.yml > cronjob.yml
-    - ./kubectl -n $KUBE_NAMESPACE create secret generic ${CI_PROJECT_PATH_SLUG}-ceph --from-file=key=$CEPH_KEY --dry-run=client -o yaml | ./kubectl -n $KUBE_NAMESPACE apply -f -
-    - ./kubectl -n $KUBE_NAMESPACE create configmap ${CI_PROJECT_PATH_SLUG}-configs --from-file=.env=$PROD_ENV --dry-run=client -o yaml | ./kubectl -n $KUBE_NAMESPACE apply -f -
-    - ./kubectl -n $KUBE_NAMESPACE apply -f deployment.yml
-    - ./kubectl -n $KUBE_NAMESPACE apply -f cronjob.yml
+    - mv kustomization.yml .orig.yml
+    - envsubst <.orig.yml >kustomization.yml
+    - ./kustomize build . --load_restrictor LoadRestrictionsNone | ./kubectl apply -f -
 

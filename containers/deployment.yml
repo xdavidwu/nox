@@ -1,28 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${CI_PROJECT_PATH_SLUG}
-  annotations:
-    app.gitlab.com/app: ${CI_PROJECT_PATH_SLUG}
-    app.gitlab.com/env: ${CI_ENVIRONMENT_SLUG}
+  name: production-nox
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: ${CI_PROJECT_PATH_SLUG}
   template:
-    metadata:
-      labels:
-        app: ${CI_PROJECT_PATH_SLUG}
-        version: "${CI_COMMIT_SHORT_SHA}"
-      annotations:
-        app.gitlab.com/app: ${CI_PROJECT_PATH_SLUG}
-        app.gitlab.com/env: ${CI_ENVIRONMENT_SLUG}
     spec:
       containers:
-        - name: ${CI_PROJECT_PATH_SLUG}-nginx
-          image: ${CI_REGISTRY_IMAGE}/nginx:${CI_ENVIRONMENT_SLUG}
-          imagePullPolicy: Always
+        - name: nginx
+          image: registry.eglo.ga/placeholder
           securityContext:
             capabilities:
               add: ["SETUID", "SETGID", "DAC_OVERRIDE", "CHOWN"]
@@ -30,9 +16,8 @@ spec:
             httpGet:
               port: 8000
               path: /canvas
-        - name: ${CI_PROJECT_PATH_SLUG}-fpm
-          image: ${CI_REGISTRY_IMAGE}/fpm:${CI_ENVIRONMENT_SLUG}
-          imagePullPolicy: Always
+        - name: fpm
+          image: registry.eglo.ga/placeholder2
           securityContext:
             capabilities:
               add: ["SETUID", "SETGID"]
@@ -40,6 +25,9 @@ spec:
             - name: configs
               mountPath: /srv/http/nox/.env
               subPath: .env
+          readinessProbe:
+            tcpSocket:
+              port: 9000
 #        - name: ${CI_PROJECT_PATH_SLUG}-mariadb
 #          image: ${CI_REGISTRY_IMAGE}/mariadb:${CI_ENVIRONMENT_SLUG}
 #          imagePullPolicy: Always
@@ -52,7 +40,7 @@ spec:
       volumes:
         - name: configs
           configMap:
-            name: ${CI_PROJECT_PATH_SLUG}-configs
+            name: configs
         - name: data
           cephfs:
             monitors:
@@ -60,15 +48,13 @@ spec:
             path: /volumes/_nogroup/nox/b1ba748f-bf53-4d53-8e41-4acc6621dc10
             user: nox
             secretRef:
-              name: ${CI_PROJECT_PATH_SLUG}-ceph
+              name: ceph
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ${CI_PROJECT_PATH_SLUG}
+  name: nox
 spec:
-  selector:
-    app: ${CI_PROJECT_PATH_SLUG}
   ports:
     - name: nox-http
       protocol: TCP
