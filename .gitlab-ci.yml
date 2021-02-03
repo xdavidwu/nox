@@ -25,8 +25,9 @@ build:
   image: alpine:latest
   before_script:
     - >
-        apk add composer npm php7-dom php7-fileinfo php7-json php7-xml
-        php7-mbstring php7-openssl php7-tokenizer tar
+        apk add composer php8 php8-phar php8-curl php8-iconv php8-json php8-mbstring php8-openssl php8-zip
+        npm php8-dom php8-fileinfo php8-xml tar
+    - rm /usr/bin/php && ln -s /usr/bin/php8 /usr/bin/php
     - composer --no-interaction --no-ansi --no-dev install
     - npm ci
   script:
