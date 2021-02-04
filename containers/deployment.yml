@@ -41,10 +41,6 @@ spec:
             - name: configs
               mountPath: /etc/grafana/grafana.ini
               subPath: grafana.ini
-          readinessProbe:
-            httpGet:
-              port: 3000
-              path: /healthz
       volumes:
         - name: configs
           configMap:
