@@ -25,5 +25,6 @@ configMapGenerator:
   - name: configs
     files:
       - .env=${PROD_ENV}
+      - grafana.ini=${GRAFANA_INI}
 resources:
   - deployment.yml

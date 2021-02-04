@@ -35,6 +35,16 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/mysql
+        - name: grafana
+          image: grafana/grafana:7.3.7
+          volumeMounts:
+            - name: configs
+              mountPath: /etc/grafana/grafana.ini
+              subPath: grafana.ini
+          readinessProbe:
+            httpGet:
+              port: 3000
+              path: /healthz
       volumes:
         - name: configs
           configMap:
