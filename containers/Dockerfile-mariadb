@@ -1,3 +1,4 @@
 FROM alpine:latest
 RUN apk add mariadb
+RUN mkdir /run/mysqld && chown mysql:mysql /run/mysqld
 CMD /usr/bin/mysqld_safe
