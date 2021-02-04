@@ -25,9 +25,8 @@ spec:
             - name: configs
               mountPath: /srv/http/nox/.env
               subPath: .env
-        - name: ${CI_PROJECT_PATH_SLUG}-mariadb
-          image: ${CI_REGISTRY_IMAGE}/mariadb:${CI_ENVIRONMENT_SLUG}
-          imagePullPolicy: Always
+        - name: mariadb
+          image: registry.eglo.ga/placeholder3
           securityContext:
             capabilities:
               add: ["SETUID", "SETGID"]
