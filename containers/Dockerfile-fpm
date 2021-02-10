@@ -2,7 +2,7 @@ FROM alpine:latest
 RUN apk add php8 php8-fpm php8-dom php8-fileinfo php8-json php8-xml php8-mbstring php8-openssl php8-pdo_mysql php8-session php8-tokenizer
 RUN chown nobody:nobody /var/log/php8
 ADD app.tar /srv/http/nox
-RUN chown -R nobody:nobody /srv/http/nox/storage
+RUN chown -R nobody:nobody /srv/http/nox/storage /srv/http/nox/bootstrap/cache
 WORKDIR /srv/http/nox/
 USER nobody:nobody
 CMD php8 artisan config:cache && php-fpm8 -F
