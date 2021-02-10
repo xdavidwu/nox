@@ -3,5 +3,6 @@ RUN apk add php8 php8-fpm php8-dom php8-fileinfo php8-json php8-xml php8-mbstrin
 RUN chown nobody:nobody /var/log/php8
 ADD app.tar /srv/http/nox
 RUN chown -R nobody:nobody /srv/http/nox/storage
+WORKDIR /srv/http/nox/
 USER nobody:nobody
-CMD php-fpm8 -F
+CMD php8 artisan config:cache && php-fpm8 -F

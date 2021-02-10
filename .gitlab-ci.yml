@@ -26,12 +26,14 @@ build:
   before_script:
     - >
         apk add composer php8 php8-phar php8-curl php8-iconv php8-json php8-mbstring php8-openssl php8-zip
-        npm php8-dom php8-fileinfo php8-xml tar
+        npm php8-dom php8-fileinfo php8-xml php8-tokenizer tar
     - rm /usr/bin/php && ln -s /usr/bin/php8 /usr/bin/php
-    - composer --no-interaction --no-ansi --no-dev install
+    - composer --no-interaction --no-ansi --optimize-autoloader --no-dev install
     - npm ci
   script:
     - npm run prod
+    - php artisan event:cache
+    - php artisan route:cache
     - echo "$CI_COMMIT_SHA" > version
     - chmod -R g=r,o=r . && find . -type d -exec chmod g=rx,o=rx {} \;
       # excluding vcs and node_modules, as they are not required for running
