@@ -13,9 +13,9 @@
                         <div class="form-group">
                             <label for="month" class="bmd-label-floating">月份</label>
                             <input id="month" class="form-control" type="month"
-                                min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
-                                max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
-                                value="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
+                                min="{{ \Carbon\Carbon::parse(\App\Models\MonthlyValue::min('month'))->format('Y-m') }}"
+                                max="{{ \Carbon\Carbon::parse(\App\Models\MonthlyValue::max('month'))->format('Y-m') }}"
+                                value="{{ \Carbon\Carbon::parse(\App\Models\MonthlyValue::max('month'))->format('Y-m') }}"
                                 pattern="[0-9]{4}-[0-9]{2}"
                                 title="YYYY-MM (西元年份-月份, 需補零)"
                                 autocomplete="off">

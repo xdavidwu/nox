@@ -1,9 +1,11 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
-use App\MonthlyValue;
-use App\Station;
+use App\Models\MonthlyValue;
+use App\Models\Station;
 
 class MonthlyValueSeeder extends Seeder
 {

@@ -13,8 +13,8 @@
                         <div class="form-group">
                             <label for="month_after" class="bmd-label-floating">起始月份</label>
                             <input id="month_after" class="form-control" type="month"
-                                min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
-                                max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
+                                min="{{ \Carbon\Carbon::parse(\App\Models\MonthlyValue::min('month'))->format('Y-m') }}"
+                                max="{{ \Carbon\Carbon::parse(\App\Models\MonthlyValue::max('month'))->format('Y-m') }}"
                                 name="month_after" pattern="[0-9]{4}-[0-9]{2}"
                                 title="YYYY-MM (西元年份-月份, 需補零)"
                                 value="{{ request()->input('month_after') }}">
@@ -26,8 +26,8 @@
                         <div class="form-group">
                             <label for="month_before" class="bmd-label-floating">結束月份</label>
                             <input id="month_before" class="form-control" type="month"
-                                min="{{ \Carbon\Carbon::parse(\App\MonthlyValue::min('month'))->format('Y-m') }}"
-                                max="{{ \Carbon\Carbon::parse(\App\MonthlyValue::max('month'))->format('Y-m') }}"
+                                min="{{ \Carbon\Carbon::parse(\App\Models\MonthlyValue::min('month'))->format('Y-m') }}"
+                                max="{{ \Carbon\Carbon::parse(\App\Models\MonthlyValue::max('month'))->format('Y-m') }}"
                                 name="month_before" pattern="[0-9]{4}-[0-9]{2}"
                                 title="YYYY-MM (西元年份-月份, 需補零)"
                                 value="{{ request()->input('month_before') }}">
@@ -39,9 +39,9 @@
                             <select id="stations" class="form-control selectpicker"
                                 name="stations[]" data-live-search="true" multiple>
                                 {{-- TODO: reduce query --}}
-                                @foreach(\App\Station::select('county')->distinct()->get() as $group)
+                                @foreach(\App\Models\Station::select('county')->distinct()->get() as $group)
                                     <optgroup label="{{ $group->county }}">
-                                        @foreach(\App\Station::where('county', $group->county)->get() as $station)
+                                        @foreach(\App\Models\Station::where('county', $group->county)->get() as $station)
                                             @if(!is_null(request()->input('stations')) &&
                                                 in_array($station->id, request()->input('stations')))
                                                 <option value="{{ $station->id }}" selected>{{ $station->name }}</option>

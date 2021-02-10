@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\MonthlyValue;
+use App\Models\MonthlyValue;
 use DateTime;
 
 class RawController extends Controller
