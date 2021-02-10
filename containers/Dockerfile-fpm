@@ -5,4 +5,4 @@ ADD app.tar /srv/http/nox
 RUN chown -R nobody:nobody /srv/http/nox/storage /srv/http/nox/bootstrap/cache
 WORKDIR /srv/http/nox/
 USER nobody:nobody
-CMD php8 artisan config:cache && php-fpm8 -F
+CMD php8 artisan config:cache && php8 artisan event:cache && php8 artisan route:cache && php-fpm8 -F

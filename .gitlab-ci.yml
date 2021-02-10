@@ -32,8 +32,6 @@ build:
     - npm ci
   script:
     - npm run prod
-    - php artisan event:cache
-    - php artisan route:cache
     - echo "$CI_COMMIT_SHA" > version
     - chmod -R g=r,o=r . && find . -type d -exec chmod g=rx,o=rx {} \;
       # excluding vcs and node_modules, as they are not required for running
