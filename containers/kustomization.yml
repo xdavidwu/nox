@@ -28,3 +28,4 @@ configMapGenerator:
       - grafana.ini=${GRAFANA_INI}
 resources:
   - deployment.yml
+  - cronjob.yml
