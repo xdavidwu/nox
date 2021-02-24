@@ -20,7 +20,7 @@ spec:
               volumeMounts:
                 - name: configs
                   mountPath: /srv/http/nox/.env
-                  subPath: .env
+                  subPath: .env.updater
           volumes:
             - name: configs
               configMap:
