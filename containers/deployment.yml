@@ -35,6 +35,9 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/mysql
+            - name: configs
+              mountPath: /etc/my.cnf.d/mariadb-server.cnf
+              subPath: mariadb-server.cnf
         - name: grafana
           image: grafana/grafana:7.3.7
           volumeMounts:

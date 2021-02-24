@@ -26,6 +26,7 @@ configMapGenerator:
     files:
       - .env=${PROD_ENV}
       - grafana.ini=${GRAFANA_INI}
+      - mariadb-server.cnf=${MARIADB_SERVER_CNF}
 resources:
   - deployment.yml
   - cronjob.yml
