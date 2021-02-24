@@ -229,4 +229,29 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Source URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used to provide link to souce code in the pages.
+    |
+    */
+
+    'source_url' => env('SOURCE_URL', 'https://gitlab.eglo.ga/db/nox'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Grafana base URL
+    |--------------------------------------------------------------------------
+    |
+    | The base url for Grafana dashboard, with panelId parameter at the end
+    |
+    */
+
+    'grafana_url' => env(
+        'GRAFANA_BASE_URL',
+        'https://grafana.eglo.ga/d-solo/pty476GGz/nox?orgId=2&panelId='
+    ),
+
 ];

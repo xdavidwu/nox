@@ -19,7 +19,7 @@
                             </option>
                     @endforeach
                 </select>
-                <iframe src="{!! env('GRAFANA_BASE_URL').'3' !!}"></iframe>
+                <iframe src="{!! config('app.grafana_url').'3' !!}"></iframe>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
 <script>
     $('#iframesrc').change(function() {
         $('iframe').attr('src',
-            '{!! env('GRAFANA_BASE_URL') !!}' + $(this).val());
+            '{!! config('app.grafana_url') !!}' + $(this).val());
     });
 </script>
 @endsection
