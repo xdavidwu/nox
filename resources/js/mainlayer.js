@@ -53,7 +53,7 @@ export default class MainLayer {
 
     getStationSeverity(station) {
         let severity = undefined;
-        if (!this.data) return severity;
+        if (!this.data || this.data[station.info.id] === undefined) return severity;
         for (let field of this.fields) {
             let val = this.data[station.info.id][field];
             if (val === null || val === undefined) continue;
@@ -88,9 +88,10 @@ export default class MainLayer {
 
     getStationText(station) {
         let text = station.getText();
+        let stationData = this.data[station.info.id];
         for (let field of this.fields) {
             text += '\n' + indices[field].name + ': ';
-            let val = this.data[station.info.id][field];
+            let val = (stationData === undefined) ? undefined : stationData[field];
             text += (val !== null && val !== undefined) ? val + ' ' + indices[field].unit : '(無資料)';
         }
         if (station.severity !== undefined)
