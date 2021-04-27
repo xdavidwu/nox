@@ -92,6 +92,9 @@ include:
 
 container_scanning:
   stage: scan
+
+container_scanning_new:
+  stage: scan
   rules:
     - when: never
   variables:
