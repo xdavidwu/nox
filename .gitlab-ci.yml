@@ -93,6 +93,7 @@ container_scanning_new:
     - when: never
   variables:
     CI_APPLICATION_TAG: $CI_PIPELINE_ID
+    CS_MAJOR_VERSION: 4
 
 nginx-container-scanning:
   extends: container_scanning_new
