@@ -1,7 +1,6 @@
 FROM alpine:latest
 RUN apk add nginx
 RUN sed -i '/user nginx;/d' /etc/nginx/nginx.conf && echo 'daemon off;error_log stderr warn;' >> /etc/nginx/nginx.conf
-RUN mkdir /run/nginx && chown nginx:nginx /run/nginx
 ADD app.tar /srv/http/nox
 ADD containers/nginx-server.conf /etc/nginx/http.d/default.conf
 USER nginx:nginx
