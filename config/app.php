@@ -238,7 +238,7 @@ return [
     |
     */
 
-    'source_url' => env('SOURCE_URL', 'https://gitlab.eglo.ga/db/nox'),
+    'source_url' => env('SOURCE_URL', 'https://gitlab.xdavidwu.link/db/nox'),
 
     /*
     |--------------------------------------------------------------------------
@@ -251,7 +251,7 @@ return [
 
     'grafana_url' => env(
         'GRAFANA_BASE_URL',
-        'https://grafana.eglo.ga/d-solo/pty476GGz/nox?orgId=2&panelId='
+        'https://nox.xdavidwu.link/grafana/d-solo/pty476GGz/nox?orgId=1&panelId='
     ),
 
 ];

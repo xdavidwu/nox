@@ -6,13 +6,13 @@ commonAnnotations:
 commonLabels:
   app: ${CI_PROJECT_NAME}
 images:
-  - name: registry.eglo.ga/placeholder
+  - name: registry.xdavidwu.link/placeholder
     newName: ${CI_REGISTRY_IMAGE}/nginx
     newTag: "${CI_PIPELINE_ID}"
-  - name: registry.eglo.ga/placeholder2
+  - name: registry.xdavidwu.link/placeholder2
     newName: ${CI_REGISTRY_IMAGE}/fpm
     newTag: "${CI_PIPELINE_ID}"
-  - name: registry.eglo.ga/placeholder3
+  - name: registry.xdavidwu.link/placeholder3
     newName: ${CI_REGISTRY_IMAGE}/mariadb
     newTag: "${CI_PIPELINE_ID}"
 generatorOptions:

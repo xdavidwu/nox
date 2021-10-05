@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
             - name: nox-data-updates
-              image: registry.eglo.ga/placeholder2
+              image: registry.xdavidwu.link/placeholder2
               command: ['/bin/sh']
               args:
                 - -c

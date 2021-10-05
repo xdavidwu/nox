@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: registry.eglo.ga/placeholder
+          image: registry.xdavidwu.link/placeholder
           securityContext:
             capabilities:
               add: ["SETUID", "SETGID", "DAC_OVERRIDE", "CHOWN"]
@@ -22,7 +22,7 @@ spec:
               port: 8000
               path: /canvas
         - name: fpm
-          image: registry.eglo.ga/placeholder2
+          image: registry.xdavidwu.link/placeholder2
           securityContext:
             capabilities:
               add: ["SETUID", "SETGID"]
@@ -31,7 +31,7 @@ spec:
               mountPath: /srv/http/nox/.env
               subPath: .env
         - name: mariadb
-          image: registry.eglo.ga/placeholder3
+          image: registry.xdavidwu.link/placeholder3
           securityContext:
             capabilities:
               add: ["SETUID", "SETGID"]
