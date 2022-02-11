@@ -90,6 +90,7 @@ deploy:
   before_script:
     - echo https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
     - apk add gettext kubectl
+    - cd containers
   script:
     - mv kustomization.yml .orig.yml
     - envsubst <.orig.yml >kustomization.yml
