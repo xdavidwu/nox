@@ -94,5 +94,5 @@ deploy:
   script:
     - mv kustomization.yml .orig.yml
     - envsubst <.orig.yml >kustomization.yml
-    - kubectl kustomize . --load-restrictor LoadRestrictionsNone | ./kubectl apply -f -
+    - kubectl kustomize . --load-restrictor LoadRestrictionsNone | kubectl apply -f -
 
