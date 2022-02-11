@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.15
 RUN apk add nginx
 RUN sed -i '/user nginx;/d' /etc/nginx/nginx.conf && echo 'daemon off;error_log stderr warn;' >> /etc/nginx/nginx.conf
 ADD app.tar /srv/http/nox

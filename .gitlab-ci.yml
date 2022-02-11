@@ -2,19 +2,18 @@ stages:
   - lint
   - build
   - package
-  - scan
   - deploy
 
 phpcs:
   stage: lint
-  image: alpine:latest
+  image: alpine:3.15
   variables:
     COMPOSER_HOME: .composer
   before_script:
-    - apk add composer php7-tokenizer php7-xmlwriter php7-simplexml
+    - apk add composer php8-tokenizer php8-xmlwriter php8-simplexml
     - composer --no-interaction --no-ansi global require squizlabs/php_codesniffer
   script:
-    - .composer/vendor/bin/phpcs --standard=PSR2 app routes config tests
+    - php8 .composer/vendor/bin/phpcs --standard=PSR2 app routes config tests
   cache:
     key: $CI_JOB_NAME
     paths:
@@ -22,12 +21,11 @@ phpcs:
 
 build:
   stage: build
-  image: alpine:latest
+  image: alpine:3.15
   before_script:
     - >
         apk add composer php8 php8-phar php8-curl php8-iconv php8-json php8-mbstring php8-openssl php8-zip
         npm php8-dom php8-fileinfo php8-xml php8-tokenizer tar
-    - rm /usr/bin/php && ln -s /usr/bin/php8 /usr/bin/php
     - composer --no-interaction --no-ansi --optimize-autoloader --no-dev install
     - npm ci
   script:
@@ -81,53 +79,19 @@ package-mariadb:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/containers/Dockerfile-mariadb --destination $CI_REGISTRY_IMAGE/mariadb:$CI_PIPELINE_ID
 
-include:
-  - template: Security/Container-Scanning.gitlab-ci.yml
-
-container_scanning:
-  stage: scan
-  rules:
-    - when: never
-  variables:
-    CI_APPLICATION_TAG: $CI_PIPELINE_ID
-    CS_MAJOR_VERSION: 4
-
-nginx-container-scanning:
-  extends: container_scanning
-  variables:
-    CI_APPLICATION_REPOSITORY: $CI_REGISTRY_IMAGE/nginx
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-
-fpm-container-scanning:
-  extends: container_scanning
-  variables:
-    CI_APPLICATION_REPOSITORY: $CI_REGISTRY_IMAGE/fpm
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-
-mariadb-container-scanning:
-  extends: container_scanning
-  variables:
-    CI_APPLICATION_REPOSITORY: $CI_REGISTRY_IMAGE/mariadb
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-
 deploy:
   stage: deploy
   image:
-    name: alpine:latest
+    name: alpine:edge
   environment:
     name: production
   only:
     - master
   before_script:
-    - apk add gettext
-    - cd containers
-    - wget https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl
-    - chmod +x kubectl
+    - echo https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+    - apk add gettext kubectl
   script:
     - mv kustomization.yml .orig.yml
     - envsubst <.orig.yml >kustomization.yml
-    - ./kubectl kustomize . --load-restrictor LoadRestrictionsNone | ./kubectl apply -f -
+    - kubectl kustomize . --load-restrictor LoadRestrictionsNone | ./kubectl apply -f -
 

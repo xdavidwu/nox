@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.15
 RUN apk add mariadb
 RUN mkdir /run/mysqld && chown mysql:mysql /run/mysqld
 CMD /usr/bin/mysqld_safe --skip-networking=false --bind-address=0.0.0.0
