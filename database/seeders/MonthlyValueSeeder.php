@@ -18,22 +18,22 @@ class MonthlyValueSeeder extends Seeder
     public function run()
     {
         ini_set('memory_limit', '1024M');
-        $url = 'https://data.epa.gov.tw/api/3/action/datastore_search';
+        $url = 'https://data.epa.gov.tw/api/frontstage/datastore.search';
         $data = '{"resource_id":"4026f97e-60f9-4d8b-9a3d-f2813f6ff2fd","q":"",'.
-            '"filters":{},"limit":999999999,"offset":0';
+            '"limit":999999999,"offset":0';
         $month = env('UPDATE_MONTH_FROM', '');
         if ($month !== '') {
             if ($month === 'auto') {
-                $month = Carbon::parse(MonthlyValue::max('month'))->subMonth(1)->format('Y-m');
+                $month = Carbon::parse(MonthlyValue::max('month'))->subMonth(2)->format('Y-m');
             }
             echo 'Update from month '.$month."\n";
-            $data = $data.',"custom_filters":[["MonitorMonth","GR","'.$month.'"]]';
+            $data = $data.',"filter":[{"column":"monitormonth","operator":"greater","value":"'.$month.'"}]';
         }
         $data = $data.'}';
         $options = array(
             'http' => array(
                 'method' => 'POST',
-                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'header' => "Content-type: application/json\r\n",
                 'content' => $data
             )
         );
@@ -41,17 +41,17 @@ class MonthlyValueSeeder extends Seeder
         echo "POST done\n";
         $data = json_decode($jsonstr);
         echo "JSON loaded\n";
-        foreach ($data->result->records as $rec) {
-            $station = Station::firstWhere('name', $rec->SiteName);
+        foreach ($data->payload->records as $rec) {
+            $station = Station::firstWhere('name', $rec->sitename);
             if ($station === null) {
                 echo 'Station not found for ';
                 print_r($rec);
                 echo "\n";
                 continue;
             }
-            $mon = DateTime::createFromFormat('!Ym', $rec->MonitorMonth);
+            $mon = DateTime::createFromFormat('!Ym', $rec->monitormonth);
             $field = '';
-            switch ($rec->ItemEngName) {
+            switch ($rec->itemengname) {
                 case 'PM2.5':
                     $field = 'pm25';
                     break;
@@ -111,7 +111,7 @@ class MonthlyValueSeeder extends Seeder
                     break;
             }
             if ($field !== '') {
-                $val = $rec->Concentration;
+                $val = $rec->concentration;
                 if ($val === 'x') {
                     $val = null;
                 }
