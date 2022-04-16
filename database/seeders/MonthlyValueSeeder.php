@@ -112,7 +112,7 @@ class MonthlyValueSeeder extends Seeder
             }
             if ($field !== '') {
                 $val = $rec->concentration;
-                if ($val === 'x') {
+                if ($val === 'x' || $val === '') {
                     $val = null;
                 }
                 MonthlyValue::updateOrCreate(
